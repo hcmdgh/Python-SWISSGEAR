@@ -1,5 +1,5 @@
-from datetime import datetime, date
-from typing import Union, Optional
+import datetime
+import typing
 
 
 class ParseError(RuntimeError):
@@ -9,7 +9,7 @@ class ParseError(RuntimeError):
     pass
 
 
-def datetime2str(dt: Union[date, datetime], *, lang: str = 'en') -> str:
+def datetime2str(dt: typing.Union[datetime.date, datetime.datetime], *, lang: str = 'en') -> str:
     """
     将date或datetime类型转换为“年月日时分秒”格式的字符串。
 
@@ -23,7 +23,7 @@ def datetime2str(dt: Union[date, datetime], *, lang: str = 'en') -> str:
         raise AssertionError
 
 
-def date2str(dt: Union[date, datetime], *, lang: str = 'en') -> str:
+def date2str(dt: typing.Union[datetime.date, datetime.datetime], *, lang: str = 'en') -> str:
     """
     将date或datetime类型转换为“年月日”格式的字符串。
 
@@ -37,7 +37,7 @@ def date2str(dt: Union[date, datetime], *, lang: str = 'en') -> str:
         raise AssertionError
 
 
-def str2datetime(s: str, *, custom_format: str = '') -> datetime:
+def str2datetime(s: str, *, custom_format: str = '') -> datetime.datetime:
     """
     将字符串形式的日期时间转换为datetime类型，支持的格式如下：
 
@@ -68,20 +68,20 @@ def str2datetime(s: str, *, custom_format: str = '') -> datetime:
 
     for f in formats:
         try:
-            return datetime.strptime(s, f)
+            return datetime.datetime.strptime(s, f)
         except ValueError:
             pass
 
     raise ParseError
 
 
-def ensure_datetime(dt: Union[date, datetime]) -> datetime:
+def ensure_datetime(dt: typing.Union[datetime.date, datetime.datetime]) -> datetime.datetime:
     """
     将date类型或datetime类型统一转换为datetime类型。
     """
-    if type(dt) == date:
-        return datetime.combine(dt, datetime.min.time())
-    elif type(dt) == datetime:
+    if type(dt) == datetime.date:
+        return datetime.datetime.combine(dt, datetime.datetime.min.time())
+    elif type(dt) == datetime.datetime:
         return dt
     else:
         raise AssertionError
