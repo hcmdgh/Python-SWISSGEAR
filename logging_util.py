@@ -18,9 +18,9 @@ _use_stdout: bool = True
 _file_pointer: typing.Optional[_SmartFilePointer] = None
 
 
-def _write_log(method: str, msg: str):
+def _write_log(level: str, msg: str):
     now = _datetime2str(datetime.datetime.now())
-    log = f"{now} [{method}] {msg}"
+    log = f"{now} [{level}] {msg}"
 
     if _use_stdout:
         print(log)
@@ -46,18 +46,22 @@ def set_stream(file_path: typing.Optional[str] = None,
             _file_pointer = _SmartFilePointer(file_path, 'a')
     else:
         _file_pointer = None
+        
+        
+def debug(msg: str):
+    _write_log(level='DEBUG', msg=msg)
 
 
 def info(msg: str):
-    _write_log(method='INFO', msg=msg)
+    _write_log(level='INFO', msg=msg)
 
 
 def error(msg: str):
-    _write_log(method='ERROR', msg=msg)
+    _write_log(level='ERROR', msg=msg)
 
 
 def warn(msg: str):
-    _write_log(method='WARN', msg=msg)
+    _write_log(level='WARN', msg=msg)
 
 
 def warning(msg: str):
